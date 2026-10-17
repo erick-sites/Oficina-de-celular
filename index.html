@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oficina do Celular - Loja 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    
+    /* PALETA DE CORES OFICIAL DA OFICINA DO CELULAR */
+    :root {
+      --blue-brand: #2B76B9;
+      --blue-bright: #00A3FF;
+      --bg-dark: #0A0D12;
+      --card-bg: #131822;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+    }
+
+    body { 
+      background-color: var(--bg-dark); 
+      color: var(--text-main); 
+      line-height: 1.5; 
+      padding-bottom: 95px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* MARCA D'ÁGUA PROTEÇÃO ANTI-CÓPIA */
+    body::before {
+      content: "OFICINA DO CELULAR LOJA 1 • DESIGN EXCLUSIVO";
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.02);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ANIMAÇÃO DE APARECIMENTO SUAVE DO QUIZ */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseBlue {
+      0% { box-shadow: 0 0 10px rgba(0, 163, 255, 0.3); }
+      50% { box-shadow: 0 0 22px rgba(0, 163, 255, 0.7); }
+      100% { box-shadow: 0 0 10px rgba(0, 163, 255, 0.3); }
+    }
+
+    /* HEADER FIXO COM AZUL DA MARCA */
+    header { 
+      background: rgba(10, 13, 18, 0.92); 
+      backdrop-filter: blur(12px); 
+      position: sticky; 
+      top: 0; 
+      z-index: 100; 
+      padding: 14px 20px; 
+      border-bottom: 2px solid var(--blue-brand); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
+    .logo { font-size: 1.05rem; font-weight: 800; color: #FFF; letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px; }
+    .logo span { color: var(--blue-bright); }
+    .badge { background: rgba(43, 118, 185, 0.2); color: var(--blue-bright); border: 1px solid var(--blue-brand); padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+
+    /* HERO SECTION */
+    .hero { padding: 30px 20px 20px; text-align: center; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 163, 255, 0.3); padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 16px; }
+    .pill-dot { width: 8px; height: 8px; background: #00FF87; border-radius: 50%; box-shadow: 0 0 8px #00FF87; }
+    .hero h1 { font-size: 1.8rem; font-weight: 800; line-height: 1.25; margin-bottom: 12px; }
+    .hero h1 span { color: var(--blue-bright); }
+    .hero p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px; }
+
+    /* QUIZ INTERATIVO PASSO A PASSO */
+    .quiz-box { 
+      background: linear-gradient(180deg, rgba(43, 118, 185, 0.1) 0%, var(--card-bg) 100%); 
+      border: 1px solid var(--blue-brand); 
+      border-radius: 20px; 
+      padding: 20px; 
+      margin: 0 20px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6); 
+    }
+    
+    .step-block { margin-bottom: 16px; display: none; animation: slideDown 0.4s forwards; }
+    .step-block.active { display: block; }
+    
+    .step-label { font-size: 0.78rem; font-weight: 800; color: var(--blue-bright); text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    
+    .select-style { 
+      width: 100%; 
+      background: #0B0E14; 
+      border: 1px solid rgba(0, 163, 255, 0.3); 
+      color: #FFF; 
+      padding: 14px; 
+      border-radius: 12px; 
+      font-size: 0.9rem; 
+      outline: none; 
+    }
+
+    /* CARDS DE SERVIÇOS */
+    .section-title { font-size: 1.15rem; font-weight: 800; margin: 28px 20px 14px; color: #FFF; display: flex; align-items: center; gap: 8px; }
+    .grid { padding: 0 20px; display: grid; gap: 14px; }
+    .card { 
+      background: var(--card-bg); 
+      border: 1px solid rgba(255, 255, 255, 0.08); 
+      border-radius: 16px; padding: 18px; 
+      transition: all 0.3s;
+    }
+    .card:hover, .card:active { border-color: var(--blue-bright); background: rgba(43, 118, 185, 0.08); }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .card-icon { width: 42px; height: 42px; background: rgba(43, 118, 185, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--blue-bright); }
+    .card h3 { font-size: 1rem; font-weight: 700; color: #FFF; }
+    .card p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; }
+    
+    .btn-action { 
+      width: 100%; 
+      background: linear-gradient(135deg, var(--blue-brand) 0%, var(--blue-bright) 100%); 
+      color: #FFF; border: none; padding: 12px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; 
+    }
+
+    /* BARRA FIXA BOTTOM WHATSAPP */
+    .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 13, 18, 0.95); backdrop-filter: blur(16px); padding: 12px 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); z-index: 1000; }
+    .btn-wsp-bottom { background: #25D366; color: #FFF; font-weight: 800; font-size: 0.92rem; padding: 14px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; width: 100%; box-shadow: 0 4px 18px rgba(37, 211, 102, 0.3); }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">🛠️ OFICINA <span>DO CELULAR</span></div>
+    <div class="badge">Loja 1</div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="pill"><div class="pill-dot"></div> Técnico de Plantão</div>
+    <h1>Conserto de Celulares & Eletrônicos em <span>Ribeirão Preto</span></h1>
+    <p>Av. Manoel Antônio Dias, 1589 — Jardim Marchesi. Peças originais, agilidade e garantia!</p>
+  </section>
+
+  <!-- SIMULADOR QUIZ INTERATIVO PASSO A PASSO -->
+  <div class="section-title">📝 Faça seu Orçamento em 3 Passos</div>
+  <div class="quiz-box">
+    
+    <!-- PASSO 1: DISPOSITIVO -->
+    <div class="step-block active" id="step1">
+      <div class="step-label">Passo 1 de 3: Qual é o aparelho?</div>
+      <select class="select-style" id="quizTipo" onchange="avancarPasso2()">
+        <option value="" disabled selected>Selecione o tipo de aparelho...</option>
+        <option value="Smartphone / Celular">📱 Smartphone / Celular</option>
+        <option value="Notebook / Laptop">💻 Notebook / Laptop</option>
+        <option value="Tablet / iPad">Tablet / iPad</option>
+        <option value="Smartwatch / Relógio">⌚ Smartwatch / Relógio</option>
+      </select>
+    </div>
+
+    <!-- PASSO 2: MARCA / MODELO (LIBERA DEPOIS DO PASSO 1) -->
+    <div class="step-block" id="step2">
+      <div class="step-label">Passo 2 de 3: Qual é a Marca?</div>
+      <select class="select-style" id="quizMarca" onchange="avancarPasso3()">
+        <option value="" disabled selected>Selecione a marca...</option>
+        <option value="Apple (iPhone/MacBook)">Apple (iPhone / MacBook / iPad)</option>
+        <option value="Samsung">Samsung</option>
+        <option value="Motorola">Motorola</option>
+        <option value="Xiaomi / Poco / Redmi">Xiaomi / Poco / Redmi</option>
+        <option value="Dell / Lenovo / Acer / Asus">Dell / Lenovo / Acer / HP / Asus</option>
+        <option value="Outra Marca">Outra Marca</option>
+      </select>
+    </div>
+
+    <!-- PASSO 3: DEFEITO (LIBERA DEPOIS DO PASSO 2) -->
+    <div class="step-block" id="step3">
+      <div class="step-label">Passo 3 de 3: Qual é o problema?</div>
+      <select class="select-style" id="quizDefeito" onchange="mostrarBotaoFinal()">
+        <option value="" disabled selected>Selecione o problema...</option>
+        <option value="Tela Trincada / Display Quebrado">📱 Tela Trincada / Display quebrado</option>
+        <option value="Bateria Viciada / Descarregando Rápido">🔋 Bateria viciada / Descarrega rápido</option>
+        <option value="Não Carrega / Conector Danificado">⚡ Não carrega / Conector com mau contato</option>
+        <option value="Caiu na Água / Molhado">💧 Caiu na água / Aparelho molhado</option>
+        <option value="Não Liga / Travado">🛑 Não liga / Travado na tela inicial</option>
+        <option value="Som / Microfone Ruim">🔊 Alto-falante mudo / Microfone ruim</option>
+        <option value="Limpeza / Formatação">💻 Limpeza interna / Formatação / Reinstalação</option>
+        <option value="Outro Defeito">🔧 Outro defeito (Explicar no WhatsApp)</option>
+      </select>
+    </div>
+
+    <!-- BOTÃO FINAL (APARECE SÓ AO RESPONDER TUDO) -->
+    <div class="step-block" id="stepFinal">
+      <button onclick="enviarOrçamentoQuiz()" class="btn-action" style="background: #25D366; font-size: 0.95rem; padding: 15px;">
+        📲 Enviar Diagnóstico no WhatsApp da Loja
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Cards de Serviços Especializados -->
+  <div class="section-title">⚡ Serviços Rápidos</div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📱</div>
+        <h3>Troca de Tela & Vidro</h3>
+      </div>
+      <p>Telas de alta sensibilidade com cores fiéis e atendimento ágil.</p>
+      <button onclick="falarDireto('Olá! Gostaria de um orçamento para TROCA DE TELA.')" class="btn-action">
+        Consultar Tela →
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🔋</div>
+        <h3>Baterias de Alta Performance</h3>
+      </div>
+      <p>Troca rápida com baterias testadas para devolver a carga duradoura.</p>
+      <button onclick="falarDireto('Olá! Gostaria de saber o valor para TROCA DE BATERIA.')" class="btn-action">
+        Consultar Bateria →
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">💻</div>
+        <h3>Manutenção de Notebooks</h3>
+      </div>
+      <p>Reparo de conectores, troca de teclado, tela e formatação completa.</p>
+      <button onclick="falarDireto('Olá! Preciso de manutenção para meu NOTEBOOK.')" class="btn-action">
+        Orçamento para Notebook →
+      </button>
+    </div>
+
+  </div>
+    <!-- Localização da Oficina -->
+  <div class="section-title">📍 Endereço da Oficina</div>
+  <div class="grid" style="margin-bottom: 25px;">
+    <div class="card" style="border-left: 4px solid var(--blue-bright);">
+      <h3>Oficina do Celular - Loja 1</h3>
+      <p style="margin-top: 6px;">📍 Av. Manoel Antônio Dias, 1589<br>Jardim Marchesi — Ribeirão Preto / SP</p>
+      <p style="margin-top: 8px; color: var(--blue-bright); font-weight: 700;">🕒 Atendimento:<br>Segunda a Sexta: 08:00 às 18:00<br>Sábado: 08:00 às 13:00</p>
+    </div>
+  </div>
+
+  <!-- Barra Fixa do WhatsApp -->
+  <div class="bottom-bar">
+    <button onclick="falarDireto('Olá! Vim pelo site da Oficina do Celular e gostaria de tirar uma dúvida.')" class="btn-wsp-bottom">
+      💬 Falar no WhatsApp da Loja 1
+    </button>
+  </div>
+
+  <!-- JAVASCRIPT DO QUIZ E NÚMERO OFICIAL DA LOJA -->
+  <script>
+    // Número Oficial extraído do WhatsApp da Loja 1 (+55 16 99993-1494)
+    const WHATSAPP_LOJA = '5516999931494';
+
+    function falarDireto(mensagem) {
+      const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
+
+    // LÓGICA DO QUIZ REVELADO PASSO A PASSO
+    function avancarPasso2() {
+      const step2 = document.getElementById('step2');
+      step2.classList.add('active');
+    }
+
+    function avancarPasso3() {
+      const step3 = document.getElementById('step3');
+      step3.classList.add('active');
+    }
+
+    function mostrarBotaoFinal() {
+      const stepFinal = document.getElementById('stepFinal');
+      stepFinal.classList.add('active');
+    }
+
+    function enviarOrçamentoQuiz() {
+      const tipo = document.getElementById('quizTipo').value;
+      const marca = document.getElementById('quizMarca').value;
+      const defeito = document.getElementById('quizDefeito').value;
+
+      const texto = `Olá! Vim pelo site de vocês e preenchi o orçamento rápido:\n\n🛠️ *Orçamento Solicitado:*\n• *Aparelho:* ${tipo}\n• *Marca/Modelo:* ${marca}\n• *Problema:* ${defeito}\n\nPoderiam me passar o valor estimado?`;
+
+      falarDireto(texto);
+    }
+  </script>
+
+</body>
+          </html>
+          
